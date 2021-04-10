@@ -1,10 +1,12 @@
-from flask import Flask
+from flask import Flask, render_template
 
+# Create Flask instance.
 app = Flask(__name__)
 
+# Create route decorator.
 @app.route("/")
 def home():
-    return "Howdy Y'all   <h1>Yeehaw<h1>"
+    return render_template("index.html")
 
 
 if __name__ == "__main__":
