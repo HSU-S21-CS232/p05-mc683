@@ -13,15 +13,7 @@ app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///bands.db'
 db = SQLAlchemy(app)
 
-# Create Model
-class Bands(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(200), nullable=False)
-    date_added = db.Column(db.DateTime, default=datetime.utcnow)
 
-    # Create String
-    def __repr__(self):
-        return '<Name %r>' % self.name
 
 
 
