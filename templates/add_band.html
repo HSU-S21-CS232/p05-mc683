@@ -18,6 +18,8 @@
 {% else %}
     <h1>Band List:</h1>
     <br/>
+<div class="shadow p-3 mb-5 bg-body rounded">
+
     <form method="POST">
         {{ form.hidden_tag() }}
 
@@ -31,6 +33,7 @@
 
         {{ form.submit(class="btn btn-dark") }}
     </form>
+</div>
 <br/><br/><br/>
 {% for our_band in our_bands %}
 
