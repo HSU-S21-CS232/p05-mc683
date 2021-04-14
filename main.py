@@ -1,7 +1,7 @@
 from flask import Flask, render_template, flash
 from flask_sqlalchemy import SQLAlchemy
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField
+from wtforms import StringField, SubmitField, IntegerField
 from wtforms.validators import DataRequired
 from datetime import datetime
 
@@ -17,6 +17,22 @@ app.config['SECRET_KEY'] = "Python Key For Secret Bidness"
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///bands.db'
 db = SQLAlchemy(app)
 
+# Db Model
+class Bands(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    band = db.Column(db.String(50), nullable=False)
+    year_formed = db.Column(db.Integer, nullable=False)
+
+    # Create string
+    def __repr__(self):
+        return '<Name %r> self.name'
+
+
+# Create band form Class
+class BandForm(FlaskForm):
+    band = StringField("Band Name", validators=[DataRequired()])
+    year_formed = IntegerField("Year Formed", validators=[DataRequired()])
+    submit = SubmitField("Submit")
 
 
 # Create a form class
@@ -29,6 +45,27 @@ class NameForm(FlaskForm):
 @app.route("/")
 def home():
     return render_template("index.html")
+
+@app.route("/band/add", methods=['GET', 'POST'])
+def add_band():
+    band = None
+    year = 0
+    form = BandForm()
+    if form.validate_on_submit():
+        band = Bands.query.filter_by(band=form.band.data).first()
+        if band is None:
+            band = Bands(band=form.band.data, year_formed=form.year_formed.data)
+            db.session.add(band)
+            db.session.commit()
+        band = form.band.data
+        form.band.data = ''
+        form.year_formed.data = ''
+        flash("Band Added!")
+    our_bands = Bands.query.order_by(Bands.year_formed)
+    return render_template("add_band.html",
+        form=form,
+        band=band,
+        our_bands=our_bands)
 
 @app.route("/user/<name>")
 def user(name):
