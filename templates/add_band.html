@@ -13,7 +13,7 @@
 {% endfor %}
 
 {% if band %}
-    <h1>Hello {{ band }}</h1>
+    <h1>Added {{ band }}</h1>
 
 {% else %}
     <h1>Band List:</h1>
@@ -39,8 +39,9 @@
 table-bordered">
 {% for our_band in our_bands %}
     <tr>
-    <td>{{our_band.id}}. {{ our_band.band }} - 
-    {{ our_band.year_formed }}</td>
+        <td>{{ our_band.band }} - 
+        {{ our_band.year_formed }}
+        </td>
     </tr>
 </table>
 {% endfor %}
