@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% for bands in myBands %}
+    <li>{{ bands.band }}</li>
+
+{% endfor %}
+    
+
+{% endblock %}

@@ -35,18 +35,7 @@
     </form>
 </div>
 <br/><br/><br/>
-<table class="table table-hover 
-table-bordered">
 
-<h1>Bands In Database</h1>
-{% for our_band in our_bands %}
-    <tr>
-    <td>{{ our_band.band }} - 
-    {{ our_band.year_formed }}</td>
-    </tr>
-{% endfor %}
-
-</table>
 {% endif %}
 
 {% endblock %}

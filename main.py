@@ -46,6 +46,11 @@ class NameForm(FlaskForm):
 def home():
     return render_template("index.html")
 
+@app.route("/bands")
+def bands():
+    myBands = Bands.query.all()
+    return render_template("bands.html", myBands=myBands)
+
 @app.route("/band/add", methods=['GET', 'POST'])
 def add_band():
     band = None
