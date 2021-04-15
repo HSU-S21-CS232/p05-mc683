@@ -22,6 +22,7 @@ class Bands(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     band = db.Column(db.String(50), nullable=False)
     year_formed = db.Column(db.Integer, nullable=False)
+    price = db.Column(db.Integer)
 
     # Create string
     def __repr__(self):
@@ -32,6 +33,7 @@ class Bands(db.Model):
 class BandForm(FlaskForm):
     band = StringField("Band Name", validators=[DataRequired()])
     year_formed = IntegerField("Year Formed", validators=[DataRequired()])
+    price = IntegerField("Price", validators=[DataRequired()])
     submit = SubmitField("Submit")
 
 
@@ -59,7 +61,7 @@ def add_band():
     if form.validate_on_submit():
         band = Bands.query.filter_by(band=form.band.data).first()
         if band is None:
-            band = Bands(band=form.band.data, year_formed=form.year_formed.data)
+            band = Bands(band=form.band.data, year_formed=form.year_formed.data, price=form.price.data)
             db.session.add(band)
             db.session.commit()
         band = form.band.data
