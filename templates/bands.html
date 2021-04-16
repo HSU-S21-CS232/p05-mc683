@@ -6,6 +6,7 @@
 {% for bands in myBands %}
     <li>
         <a href="{{ url_for('update', id=bands.id)}}"> {{ bands.band }} </a>
+        - {{ bands.year_formed }} ${{ bands.price }}
     </li>
 
 {% endfor %}
