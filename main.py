@@ -46,7 +46,7 @@ class NameForm(FlaskForm):
 # Create route decorator.
 @app.route("/")
 def home():
-    return render_template("index.html")
+    return render_template("home.html")
 
 # Update band database.
 @app.route("/update/<int:id>", methods=['GET', 'POST'])
