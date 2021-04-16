@@ -1,4 +1,4 @@
-from flask import Flask, render_template, flash
+from flask import Flask, render_template, flash, request
 from flask_sqlalchemy import SQLAlchemy
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, IntegerField
@@ -48,6 +48,32 @@ class NameForm(FlaskForm):
 def home():
     return render_template("index.html")
 
+# Update band database.
+@app.route("/update/<int:id>", methods=['GET', 'POST'])
+def update(id):
+    form = BandForm()
+    band_to_update = Bands.query.get_or_404(id)
+    if request.method == "POST":
+        band_to_update.band = request.form["band"]
+        band_to_update.year_formed = request.form["year_formed"]
+        band_to_update.price = request.form["price"]
+        try:
+            db.session.commit()
+            flash("Band Updated Succesfully.")
+            return render_template("update.html",
+                form=form,
+                band_to_update = band_to_update)
+        except:
+            flash("Error!")
+            return render_template("update.html",
+                form=form,
+                band_to_update = band_to_update)
+    else:
+        flash("Band Updated Succesfully.")
+        return render_template("update.html",
+            form=form,
+            band_to_update = band_to_update)
+
 @app.route("/bands")
 def bands():
     myBands = Bands.query.all()
@@ -89,21 +115,6 @@ def page_not_found(e):
 @app.errorhandler(500)
 def page_not_found(e):
     return render_template("500.html"), 500
-
-
-# Create Name Page
-@app.route("/name", methods=['GET', 'POST'])
-def name():
-    name = None
-    form = NameForm()
-    # Validate Form
-    if form.validate_on_submit():
-        name = form.name.data
-        form.name.data = ''
-        flash("Thanks for submission!")
-    return render_template("name.html",
-        name = name,
-        form = form)
 
 
 

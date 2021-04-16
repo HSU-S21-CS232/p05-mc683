@@ -4,7 +4,9 @@
 
 <h1>Bands in Database</h1>
 {% for bands in myBands %}
-    <li>{{ bands.band }}</li>
+    <li>
+        <a href="{{ url_for('update', id=bands.id)}}"> {{ bands.band }} </a>
+    </li>
 
 {% endfor %}
     
