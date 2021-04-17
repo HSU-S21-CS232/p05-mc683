@@ -18,3 +18,6 @@ will take you to the page that lets you input information for a band in three
 separate fields: Band Name, Year Formed, and Price. I'm not sure what price means,
 but I believe my idea was to have prices that way you could search for bands or 
 purchase bands for a price.
+
+# Demonstration
+![](p05.gif)
